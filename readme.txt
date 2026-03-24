@@ -34,3 +34,14 @@ Parallel_workflow
                                   .
                                 END 
  
+
+Conditional workflow:
+                    START
+
+                show_equation
+
+          calculate_discriminant
+
+no_ral_roots      real_roots      repeated_roots
+
+                   END
