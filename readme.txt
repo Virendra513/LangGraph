@@ -36,6 +36,7 @@ Parallel_workflow
  
 
 Conditional workflow:
+  No LLM
                     START
 
                 show_equation
@@ -43,5 +44,20 @@ Conditional workflow:
           calculate_discriminant
 
 no_ral_roots      real_roots      repeated_roots
+
+                   END
+
+
+  LLM
+
+                    START
+
+                find sentiment
+
+            condn               Condn
+      
+      run diagnostic            
+                                  
+    Respone                          Response
 
                    END
