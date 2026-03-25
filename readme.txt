@@ -58,6 +58,6 @@ no_ral_roots      real_roots      repeated_roots
       
       run diagnostic            
                                   
-    Respone                          Response
+    negative_Respone            positive_Response
 
                    END
