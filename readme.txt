@@ -61,3 +61,16 @@ no_ral_roots      real_roots      repeated_roots
     negative_Respone            positive_Response
 
                    END
+
+Iterative workflow
+                    START
+
+                  genrate (LLM)
+
+                 Evaluate (LLM2)
+
+condn( Approved )               Condn(needs_imrovement)
+      
+      END                           optimize (LLM3)
+
+                  
