@@ -65,7 +65,7 @@ no_ral_roots      real_roots      repeated_roots
 Iterative workflow
                     START
 
-                  genrate (LLM)
+                  generate (LLM)
 
                  Evaluate (LLM2)
 
