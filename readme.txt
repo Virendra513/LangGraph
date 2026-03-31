@@ -81,3 +81,13 @@ ChatBOt_1
     Chat_Node
 
       END
+
+
+Persitence
+   START
+     .
+  GEN_Joke
+     .
+  GEN_EXP
+    .
+    ENDS
