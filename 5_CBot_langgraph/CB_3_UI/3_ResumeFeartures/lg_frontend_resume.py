@@ -1,7 +1,7 @@
 import streamlit as st
 from lg_backend_resume import cb, invoke_model
 import uuid
-
+from langchain_core.messages import HumanMessage
 # ************************* utility functions
 
 def generate_thread_id():
@@ -18,6 +18,32 @@ def add_thread(thread_id):
     if thread_id not in st.session_state['chat_threads']:
         st.session_state['chat_threads'].append(thread_id)
 
+def load_conversation(thread_id):
+    return cb.get_state(config={'configurable': {'thread_id': thread_id}}).values['messages']
+
+
+
+def get_first_human_message_10_words(cb ,thread_id: str) -> str:
+    # Build config using thread_id
+    config = {"configurable": {"thread_id": thread_id}}
+
+    # Get state from LangGraph memory
+    state = cb.get_state(config)
+
+    if not state or "messages" not in state.values:
+        return ""
+
+    messages = state.values["messages"]
+
+    # Find first human/user message
+    for m in messages:
+        if isinstance(m, dict) and m.get("role") == "user":
+            return " ".join(m["content"].split()[:10])
+
+        elif hasattr(m, "type") and m.type == "human":
+            return " ".join(m.content.split()[:10])
+
+    return ""  # if no human message found
 
 # ************** Session Setup *********************************
 
@@ -40,10 +66,27 @@ st.sidebar.title('ESSMORATH-AI CB')
 if st.sidebar.button('New Chat'):
     reset_chat()
 
-st.sidebar.header(' Conversation History')
+st.sidebar.header('Conversation History')
 
 for thread_id in st.session_state['chat_threads']:
-    st.sidebar.button(str(thread_id))
+    #if st.sidebar.button(str(thread_id)):
+    label = get_first_human_message_10_words(cb, thread_id)
+    if not label:
+        label = "New Chat Initialted..."
+    if st.sidebar.button(label):
+        st.session_state['thread_id'] = thread_id
+        messages=load_conversation(thread_id)
+
+        temp_messages = []
+
+        for msg in messages:
+            if isinstance(msg, HumanMessage):
+                role = 'user'
+            else:
+                role ='assistant'
+            temp_messages.append({'role': role, 'content': msg.content})    
+
+        st.session_state['message_history'] = temp_messages
 
 
 for message in st.session_state['message_history']:
