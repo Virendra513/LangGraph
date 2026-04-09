@@ -2,3 +2,6 @@
 lanG
 __pycache__/
 *.pyc
+Lib/
+venv/
+env/
